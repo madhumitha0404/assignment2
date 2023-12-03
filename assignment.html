@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data of Company</title>
+  <style>
+    
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #555;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="checkbox"]::after {
+  background-color: #2196F3; 
+  border: 2px solid #2196F3;
+}
+#searchInput {
+    width: 500px; 
+
+  }
+
+  </style>
+</head>
+<body>
+    <div id="usersTable" style="padding: 12px;">
+        <input id="searchInput" placeholder="Search..." oninput="searchUsers(event)">
+      </div>
+<div id="userTable"></div>
+
+<script>
+  let users = [
+    // ... (
+        {
+        "id": "1",
+        "name": "Aaron Miles",
+        "email": "aaron@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "2",
+        "name": "Aishwarya Naik",
+        "email": "aishwarya@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "3",
+        "name": "Arvind Kumar",
+        "email": "arvind@mailinator.com",
+        "role": "admin"
+    },
+    {
+        "id": "4",
+        "name": "Caterina Binotto",
+        "email": "caterina@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "5",
+        "name": "Chetan Kumar",
+        "email": "chetan@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "6",
+        "name": "Jim McClain",
+        "email": "jim@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "7",
+        "name": "Mahaveer Singh",
+        "email": "mahaveer@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "8",
+        "name": "Rahul Jain",
+        "email": "rahul@mailinator.com",
+        "role": "admin"
+    },
+    {
+        "id": "9",
+        "name": "Rizan Khan",
+        "email": "rizan@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "10",
+        "name": "Sarah Potter",
+        "email": "sarah@mailinator.com",
+        "role": "admin"
+    },
+    {
+        "id": "11",
+        "name": "Keshav Muddaiah",
+        "email": "keshav@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "12",
+        "name": "Nita Ramesh",
+        "email": "nita@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "13",
+        "name": "Julia Hunstman",
+        "email": "julia@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "14",
+        "name": "Juan Alonso",
+        "email": "juan@mailinator.com",
+        "role": "admin"
+    },
+    {
+        "id": "15",
+        "name": "Gabriel Montoya",
+        "email": "gabriel@mailinator.com",
+        "role": "admin"
+    },
+    {
+        "id": "16",
+        "name": "Beatrice Iglesias",
+        "email": "beatrice@mailinator.com",
+        "role": "admin"
+    },
+    {
+        "id": "17",
+        "name": "Sarah Symms",
+        "email": "sarah.s@mailinator.com",
+        "role": "admin"
+    },
+    {
+        "id": "18",
+        "name": "Patrick Pinheiro",
+        "email": "patrick@mailinator.com",
+        "role": "admin"
+    },
+    {
+        "id": "19",
+        "name": "Anand Patel",
+        "email": "anand@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "20",
+        "name": "Kishore Kalburgi",
+        "email": "kishore@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "21",
+        "name": "Rebecca Norris",
+        "email": "rebecca@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "22",
+        "name": "Özgür Başak",
+        "email": "ozgur@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "23",
+        "name": "Robin Andersen",
+        "email": "robin@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "24",
+        "name": "Nandini Kumar",
+        "email": "nandini@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "25",
+        "name": "Nikita Smith",
+        "email": "nikita@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "26",
+        "name": "Colton Doe",
+        "email": "colton@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "27",
+        "name": "Alain Senna",
+        "email": "alain@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "28",
+        "name": "Ashwin Jain",
+        "email": "ashwin@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "29",
+        "name": "Seema Bhatt",
+        "email": "seema@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "30",
+        "name": "Kayla Scarpinski",
+        "email": "kayla@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "31",
+        "name": "Ajay Ghosh",
+        "email": "ajay@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "32",
+        "name": "Chris Lindberg",
+        "email": "chris@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "33",
+        "name": "Christina Mourujärvi",
+        "email": "christina@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "34",
+        "name": "Mikhail Bill",
+        "email": "mikhail@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "35",
+        "name": "Eino Göregen",
+        "email": "eino@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "36",
+        "name": "Zachariah Johansson",
+        "email": "zacharaiah@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "37",
+        "name": "Aimaan Mohammed",
+        "email": "aimaan@mailinator.com",
+        "role": "admin"
+    },
+    {
+        "id": "38",
+        "name": "Aika Tsunoda",
+        "email": "aika@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "39",
+        "name": "Kimiko Minamoto",
+        "email": "kimiko@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "40",
+        "name": "Alyona Baginskaite",
+        "email": "alyona@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "41",
+        "name": "Anirudh Mukherjee",
+        "email": "anirudh@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "42",
+        "name": "Alyona Gov",
+        "email": "alyonagov@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "43",
+        "name": "Robin Singh",
+        "email": "robin@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "44",
+        "name": "Vijay Vasudevan",
+        "email": "vijayv@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "45",
+        "name": "Steve Smith",
+        "email": "steve@mailinator.com",
+        "role": "member"
+    },
+    {
+        "id": "46",
+        "name": "Anirudh Banerjee",
+        "email": "anirudhb@mailinator.com",
+        "role": "member"
+    }
+  ];
+
+  const pageSize = 10;
+  let currentPage = 1;
+  let selectedRows = [];
+
+  function renderTable() {
+    const container = document.getElementById('userTable');
+    const start = (currentPage - 1) * pageSize;
+    const end = start + pageSize;
+    const displayedUsers = users.slice(start, end);
+
+    const tableHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th><input type="checkbox" id="selectAll" onclick="toggleSelectAll()"></th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${displayedUsers.map(renderRow).join('')}
+        </tbody>
+      </table>
+      <div>
+        <button class="first-page" onclick="gotoPage(1)">First</button>
+        <button class="previous-page" onclick="gotoPage(currentPage - 1)" ${currentPage === 1 ? 'disabled' : ''}>Previous</button>
+        <span>Page ${currentPage}</span>
+        <button class="next-page" onclick="gotoPage(currentPage + 1)" ${end >= users.length ? 'disabled' : ''}>Next</button>
+        <button class="last-page" onclick="gotoPage(Math.ceil(users.length / pageSize))">Last</button>
+        <button class="delete-selected" onclick="deleteSelected()">Delete Selected</button>
+        <button type="button" class="close" aria-hidden="true" onclick="deleteRow(this);">&times;</button>
+      </div>
+    `;
+
+    container.innerHTML = tableHTML;
+  }
+
+  function renderRow(user) {
+  const isSelected = selectedRows.includes(user.id);
+  return `
+    <tr class="${isSelected ? 'selected' : ''}" data-id="${user.id}">
+        <td><input type="checkbox" onclick="toggleSelect(${user.id})"></td>
+
+      <td>${user.id}</td>
+      <td contenteditable="true">${user.name}</td>
+      <td>${user.email}</td>
+      <td>${user.role}</td>
+      <td>
+        <button class="edit" onclick="editRow(${user.id})">Edit</button>
+        <button type="button" class="close" aria-hidden="true" onclick="deleteRow(this);">&times;</button>
+      </td>
+    </tr>
+  `;
+}
+  
+function editRow(userId) {
+  // Find the user by ID
+  const user = users.find(u => u.id === userId);
+
+  const row = document.querySelector(`tr[data-id="${userId}"]`);
+
+  const nameCell = row.querySelector('td:nth-child(3)');
+  const emailCell = row.querySelector('td:nth-child(4)');
+  const roleCell = row.querySelector('td:nth-child(5)');
+  const originalName = nameCell.innerText;
+  const originalEmail = emailCell.innerText;
+  const originalRole = roleCell.innerText;
+
+  nameCell.contentEditable = true;
+  emailCell.contentEditable = true;
+  roleCell.contentEditable = true;
+
+  // Focus on the name cell for a better user experience
+  nameCell.focus();
+
+  // Listen for blur event to save changes
+  row.addEventListener('blur', (event) => {
+    
+    if (event.relatedTarget && event.relatedTarget.type !== 'checkbox') {
+      // Check if the content has changed
+      if (
+        nameCell.innerText.trim() !== originalName.trim() ||
+        emailCell.innerText.trim() !== originalEmail.trim() ||
+        roleCell.innerText.trim() !== originalRole.trim()
+      ) {
+        // Update the user's name and email in the in-memory data
+        user.name = nameCell.innerText;
+        user.email = emailCell.innerText;
+        user.role = roleCell.innerText;
+        // You may want to trigger an API call or further actions here to save changes
+      }
+
+      // Disable content editing
+      nameCell.contentEditable = false;
+      emailCell.contentEditable = false;
+      roleCell.contentEditable = false;
+    }
+  });
+}
+
+  function toggleSelect(userId) {
+    if (selectedRows.includes(userId)) {
+      selectedRows = selectedRows.filter(id => id !== userId);
+    } else {
+      selectedRows.push(userId);
+    }
+
+    renderTable();
+  }
+
+  function gotoPage(page) {
+    currentPage = Math.max(1, Math.min(page, Math.ceil(users.length / pageSize)));
+    renderTable();
+  }
+
+  function deleteSelected() {
+    users = users.filter(user => !selectedRows.includes(user.id));
+    selectedRows = [];
+    renderTable();
+  }
+
+
+function searchUsers(event) {
+    const searchTerm = event.target.value.toLowerCase();
+    users = users.filter(user => {
+    
+      return (
+        user.id.toString().toLowerCase().includes(searchTerm) ||
+        user.name.toLowerCase().includes(searchTerm) ||
+        user.email.toLowerCase().includes(searchTerm) ||
+        user.role.toLowerCase().includes(searchTerm)
+      );
+    });
+
+    currentPage = 1;
+    renderTable();
+}
+function deleteRow(el) {
+  if (!confirm("Are you sure you want to delete?")) return;
+
+  
+  var row = el.closest('tr');
+
+  var userId = row.dataset.id;
+
+ 
+  row.parentNode.removeChild(row);
+
+  users = users.filter(user => user.id !== userId);
+}
+renderTable();
+
+
+
+
+</script>
+
+</body>
+</html>
